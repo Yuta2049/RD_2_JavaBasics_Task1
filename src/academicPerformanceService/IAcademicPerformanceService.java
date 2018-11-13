@@ -4,9 +4,9 @@ import data.Student;
 
 public interface IAcademicPerformanceService {
 
-    int getDaysToEndOfCurriculum(Student student);
+    long getDaysToEndOfCurriculum(Student student);
 
-    int getAverageMark(Student student);
+    double getAverageMark(Student student);
 
     void printPossibilityOfExpulsion(Student student);
 

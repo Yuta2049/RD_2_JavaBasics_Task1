@@ -1,5 +1,7 @@
 package demoService;
 
+import academicPerformanceService.AcademicPerformanceService;
+import academicPerformanceService.IAcademicPerformanceService;
 import data.Course;
 import data.Curriculum;
 import data.Student;
@@ -17,6 +19,7 @@ public class DemoService implements IDemoService {
     @Override
     public void showDemo() {
 
+        // ЗАПОЛНЯЕМ НАЧАЛЬНЫЕ ДАННЫЕ
 
         // Добавим программы
 
@@ -49,6 +52,20 @@ public class DemoService implements IDemoService {
         students.add(new Student(2, "Petrov", "Petr", curriculumJava,
                 LocalDate.of(2018, Month.AUGUST, 1),
                 Stream.of(4, 5, 3, 2, 3, 3, 5, 5).collect(Collectors.toList())));
+
+
+        // ТУТ САМ ВЫВОД
+
+        IAcademicPerformanceService academicPerformanceService = new AcademicPerformanceService();
+        for (Student currentStudent : students) {
+            System.out.println("Студент: "+currentStudent.getFirstName()+" "+currentStudent.getSecondName()+
+                    " осталось учиться: "+ academicPerformanceService.getDaysToEndOfCurriculum(currentStudent));
+        }
+
+        for (Student currentStudent : students) {
+            System.out.println("Студент: "+currentStudent.getFirstName()+" "+currentStudent.getSecondName()+
+                    " средний балл: "+ academicPerformanceService.getAverageMark(currentStudent));
+        }
 
     }
 }

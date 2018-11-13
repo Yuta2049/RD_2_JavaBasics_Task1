@@ -6,7 +6,7 @@ public class Curriculum {
 
     private long id;
     private String name;
-    private List courses;
+    private List<Course> courses;
 
     public Curriculum(long id, String name, List courses) {
         this.id = id;
@@ -36,6 +36,14 @@ public class Curriculum {
 
     public List getCourses() {
         return courses;
+    }
+
+    public int getCurriculumDuration() {
+        int duration = 0;
+        for (Course currentCourse: courses) {
+            duration += currentCourse.getDuration();
+        }
+        return duration;
     }
 
 }
