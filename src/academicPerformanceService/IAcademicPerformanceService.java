@@ -2,15 +2,19 @@ package academicPerformanceService;
 
 import data.Student;
 
+import java.util.List;
+
 public interface IAcademicPerformanceService {
 
     long getDaysToEndOfCurriculum(Student student);
 
     double getAverageMark(Student student);
 
-    void printPossibilityOfExpulsion(Student student);
+    boolean getPossibilityOfExpulsion(Student student);
 
-    void printListOfStudents(boolean sort);
+    List getListOfStudentsSortedByAverageMark(List<Student> students);
+
+    List getListOfStudentsSortedByDaysToEndOfCurriculum(List<Student> students);
 
     void printListOfStudentsPossibleWontBeExpelled();
 

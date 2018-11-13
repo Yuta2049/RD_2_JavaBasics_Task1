@@ -67,5 +67,30 @@ public class DemoService implements IDemoService {
                     " средний балл: "+ academicPerformanceService.getAverageMark(currentStudent));
         }
 
+        for (Student currentStudent : students) {
+            System.out.println("Студент: "+currentStudent.getFirstName()+" "+currentStudent.getSecondName()+
+                    " возможность отчисления: "+ academicPerformanceService.getPossibilityOfExpulsion(currentStudent));
+        }
+
+
+        System.out.println();
+        System.out.println("Отсортируем список по среднему баллу");
+        academicPerformanceService.getListOfStudentsSortedByAverageMark(students);
+
+        for (Student currentStudent : students) {
+            System.out.println("Студент: "+currentStudent.getFirstName()+" "+currentStudent.getSecondName()+
+                    " средний балл: "+ academicPerformanceService.getAverageMark(currentStudent));
+        }
+
+
+        System.out.println();
+        System.out.println("Отсортируем список по времени до окончания обучения");
+        academicPerformanceService.getListOfStudentsSortedByAverageMark(students);
+
+        for (Student currentStudent : students) {
+            System.out.println("Студент: "+currentStudent.getFirstName()+" "+currentStudent.getSecondName()+
+                    " время до окончания обучения: "+ academicPerformanceService.getDaysToEndOfCurriculum(currentStudent));
+        }
+
     }
 }

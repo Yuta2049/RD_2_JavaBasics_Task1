@@ -5,6 +5,8 @@ import data.Student;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
+import java.util.List;
 
 public class AcademicPerformanceService implements IAcademicPerformanceService {
 
@@ -36,15 +38,28 @@ public class AcademicPerformanceService implements IAcademicPerformanceService {
     }
 
     @Override
-    public void printPossibilityOfExpulsion(Student student) {
+    public boolean getPossibilityOfExpulsion(Student student) {
 
-        
+        if (getAverageMark(student) >= 4.5) {
+            return false;
+        } else {
+            return true;
+        }
 
     }
 
     @Override
-    public void printListOfStudents(boolean sort) {
+    public List getListOfStudentsSortedByAverageMark(List<Student> students) {
 
+        students.sort(Comparator.comparing(this::getAverageMark));
+        return students;
+    }
+
+    @Override
+    public List getListOfStudentsSortedByDaysToEndOfCurriculum(List<Student> students) {
+
+        students.sort(Comparator.comparing(this::getDaysToEndOfCurriculum));
+        return students;
     }
 
     @Override
