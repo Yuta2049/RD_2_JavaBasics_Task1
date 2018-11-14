@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface IAcademicPerformanceService {
 
+    long getTimeOfEducationInDays(Student student);
+
     long getDaysToEndOfCurriculum(Student student);
 
     double getAverageMark(Student student);

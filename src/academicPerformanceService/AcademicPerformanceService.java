@@ -11,6 +11,21 @@ import java.util.List;
 public class AcademicPerformanceService implements IAcademicPerformanceService {
 
     @Override
+    public long getTimeOfEducationInDays(Student student) {
+
+        double duration = 0;
+        Curriculum curriculum = student.getCurriculum();
+        if (curriculum != null) {
+            duration = curriculum.getCurriculumDuration()/8;
+        }
+
+        long timeOfEducation = ChronoUnit.DAYS.between(student.getStart_date(), LocalDate.now());
+
+        return (long) Math.ceil(Double.min(duration, timeOfEducation));
+
+    }
+
+    @Override
     public long getDaysToEndOfCurriculum(Student student) {
 
         int duration = 0;

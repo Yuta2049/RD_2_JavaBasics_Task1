@@ -5,7 +5,7 @@ import data.Curriculum;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Student {
+public class Student implements java.io.Serializable {
 
     private long id;
     private String firstName;
@@ -62,12 +62,11 @@ public class Student {
         return marks;
     }
 
-    public Student(int id, String firstName, String secondName, Curriculum curriculum, LocalDate start_date, List<Integer> marks) {
+    public Student(int id, String firstName, String secondName, Curriculum curriculum, LocalDate start_date) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
         this.curriculum = curriculum;
         this.start_date = start_date;
-        this.marks = marks;
     }
 }
