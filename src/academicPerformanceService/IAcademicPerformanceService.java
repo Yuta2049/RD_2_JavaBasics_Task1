@@ -18,6 +18,6 @@ public interface IAcademicPerformanceService {
 
     List getListOfStudentsSortedByDaysToEndOfCurriculum(List<Student> students);
 
-    void printListOfStudentsPossibleWontBeExpelled();
+    boolean StudentPossibleWontBeExpelled(Student student);
 
 }

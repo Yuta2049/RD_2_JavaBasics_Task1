@@ -8,7 +8,7 @@ public class Curriculum implements java.io.Serializable {
     private String name;
     private List<Course> courses;
 
-    public Curriculum(long id, String name, List courses) {
+    public Curriculum(long id, String name, List<Course> courses) {
         this.id = id;
         this.name = name;
         this.courses = courses;
@@ -22,7 +22,7 @@ public class Curriculum implements java.io.Serializable {
         this.name = name;
     }
 
-    public void setCourses(List course) {
+    public void setCourses(List<Course> course) {
         this.courses = course;
     }
 
@@ -40,7 +40,7 @@ public class Curriculum implements java.io.Serializable {
 
     public int getCurriculumDuration() {
         int duration = 0;
-        for (Course currentCourse: courses) {
+        for (Course currentCourse : courses) {
             duration += currentCourse.getDuration();
         }
         return duration;

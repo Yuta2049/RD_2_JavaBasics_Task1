@@ -12,6 +12,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -23,7 +24,7 @@ public class DemoService implements IDemoService {
     public void showDemo() {
 
         // Инициализируем список студентов
-        List<Student> students = new ArrayList<>();
+        List<Student> students;
 
         // Проверяем, есть ли файл с сохранненными тестовыми данными
         if (!new File("TestData.txt").isFile()) {
@@ -40,70 +41,39 @@ public class DemoService implements IDemoService {
         }
 
         IAcademicPerformanceService academicPerformanceService = new AcademicPerformanceService();
-/*
-
-
-
-        // Сохраним в файл программы
-
-        //List<Curriculum> curriculums = new ArrayList<>();
-        /*
-        curriculums.add(curriculumJ2EE);
-        curriculums.add(curriculumJava);
-        */
-
-//        IDataStorageService dataStorageService = new DataStorageServiceFile();
-        /*
-        dataStorageService.saveToStorageCurriculums(curriculums);
-
-*/
-
-        // Сохраним в файл студентов
-        //dataStorageService.saveToStorageStudents(students);
-
-
-        // Прочитаем
-        //curriculums = dataStorageService.readFromStorageCurriculums();
-//        students = dataStorageService.readFromStorageStudents();
-
-
-
-        // ТУТ САМ ВЫВОД
 
         for (Student currentStudent : students) {
-            System.out.println("Студент: "+currentStudent.getFirstName()+" "+currentStudent.getSecondName()+
-                    " осталось учиться: "+ academicPerformanceService.getDaysToEndOfCurriculum(currentStudent));
-        }
+            System.out.println("Студент: " + currentStudent.getFirstName() + " " + currentStudent.getSecondName());
+            Curriculum curriculum = currentStudent.getCurriculum();
+            System.out.println("Программа: " + curriculum.getName() + ". Продолжительность обучения: " + curriculum.getCurriculumDuration() + " часов / " + (int) Math.ceil(curriculum.getCurriculumDuration() / (double) 8) + " дней");
+            System.out.println("Дата начала обучения: " + currentStudent.getStart_date() + ", осталось учиться: " + academicPerformanceService.getDaysToEndOfCurriculum(currentStudent) + " дней");
+            System.out.println("Оценки: " + Arrays.toString(currentStudent.getMarks().toArray()));
+            System.out.println("Средний балл: " + academicPerformanceService.getAverageMark(currentStudent));
+            System.out.println("Возможность отчисления: " + academicPerformanceService.getPossibilityOfExpulsion(currentStudent));
 
-        for (Student currentStudent : students) {
-            System.out.println("Студент: "+currentStudent.getFirstName()+" "+currentStudent.getSecondName()+
-                    " средний балл: "+ academicPerformanceService.getAverageMark(currentStudent));
+            System.out.println();
         }
-
-        for (Student currentStudent : students) {
-            System.out.println("Студент: "+currentStudent.getFirstName()+" "+currentStudent.getSecondName()+
-                    " возможность отчисления: "+ academicPerformanceService.getPossibilityOfExpulsion(currentStudent));
-        }
-
 
         System.out.println();
         System.out.println("Отсортируем список по среднему баллу");
         academicPerformanceService.getListOfStudentsSortedByAverageMark(students);
 
         for (Student currentStudent : students) {
-            System.out.println("Студент: "+currentStudent.getFirstName()+" "+currentStudent.getSecondName()+
-                    " средний балл: "+ academicPerformanceService.getAverageMark(currentStudent));
+            System.out.println("Студент: " + currentStudent.getFirstName() + " " + currentStudent.getSecondName() +
+                    " средний балл: " + academicPerformanceService.getAverageMark(currentStudent));
         }
-
 
         System.out.println();
         System.out.println("Отсортируем список по времени до окончания обучения");
         academicPerformanceService.getListOfStudentsSortedByDaysToEndOfCurriculum(students);
 
-        for (Student currentStudent : students) {
-            System.out.println("Студент: "+currentStudent.getFirstName()+" "+currentStudent.getSecondName()+
-                    " время до окончания обучения: "+ academicPerformanceService.getDaysToEndOfCurriculum(currentStudent));
-        }
+        System.out.println();
+        System.out.println("Список студентов по условию \"Есть вероятность, что не будет отчислен\":");
+
+        //for (Student currentStudent : students) {
+          //  System.out.println("Студент: " + currentStudent.getFirstName() + " " + currentStudent.getSecondName() +
+           //         " время до окончания обучения: " + academicPerformanceService.getDaysToEndOfCurriculum(currentStudent));
+        students.stream().filter(academicPerformanceService::StudentPossibleWontBeExpelled).forEach(System.out::println);
 
     }
 
@@ -113,11 +83,11 @@ public class DemoService implements IDemoService {
         // Добавим программы
 
         Curriculum curriculumJ2EE = new Curriculum(1, "J2EE Developer",
-            Stream.of(
-                new Course(1L, "Технология Java Servlets", 16),
-                new Course(2L, "Struts Framework", 24),
-                new Course(3L, "Spring Framework", 48),
-                new Course(4L, "Hibernate", 20)).collect(Collectors.toList())
+                Stream.of(
+                        new Course(1L, "Технология Java Servlets", 16),
+                        new Course(2L, "Struts Framework", 24),
+                        new Course(3L, "Spring Framework", 48),
+                        new Course(4L, "Hibernate", 20)).collect(Collectors.toList())
         );
 
 
@@ -134,12 +104,16 @@ public class DemoService implements IDemoService {
         List<Student> students = new ArrayList<>();
 
         students.add(new Student(1, "Ivanov", "Ivan", curriculumJ2EE,
-                LocalDate.of(2018, Month.JUNE, 1)));
-                //Stream.of(3, 4, 2, 5, 3, 3).collect(Collectors.toList())));
+                LocalDate.of(2018, Month.NOVEMBER, 1)));
 
         students.add(new Student(2, "Petrov", "Petr", curriculumJava,
-                LocalDate.of(2018, Month.AUGUST, 1)));
-                //Stream.of(4, 5, 3, 2, 3, 3, 5, 5).collect(Collectors.toList())));
+                LocalDate.of(2018, Month.NOVEMBER, 1)));
+
+        students.add(new Student(3, "Negodyaev", "Sebastian", curriculumJava,
+                LocalDate.of(2018, Month.NOVEMBER, 10)));
+
+        students.add(new Student(3, "Sidorova", "Agafia", curriculumJ2EE,
+                LocalDate.of(2018, Month.NOVEMBER, 5)));
 
         IAcademicPerformanceService academicPerformanceService = new AcademicPerformanceService();
 
@@ -147,8 +121,9 @@ public class DemoService implements IDemoService {
         for (Student currentStudent : students) {
 
             List<Integer> marks = new ArrayList<>();
-            for (int i=0; i<academicPerformanceService.getTimeOfEducationInDays(currentStudent); i++) {
-                int mark = (int) (Math.random() * (4)) + 2;
+            for (int i = 0; i < academicPerformanceService.getTimeOfEducationInDays(currentStudent); i++) {
+                //int mark = (int) (Math.random() * (4)) + 2;
+                int mark = (int) (Math.random() * (5) + 1);
                 marks.add(mark);
             }
             currentStudent.setMarks(marks);

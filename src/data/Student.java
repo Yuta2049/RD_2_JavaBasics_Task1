@@ -69,4 +69,12 @@ public class Student implements java.io.Serializable {
         this.curriculum = curriculum;
         this.start_date = start_date;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "firstName='" + firstName + '\'' +
+                ", secondName='" + secondName + '\'' +
+                '}';
+    }
 }
