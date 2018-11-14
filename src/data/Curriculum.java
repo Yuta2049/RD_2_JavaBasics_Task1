@@ -2,7 +2,7 @@ package data;
 
 import java.util.List;
 
-public class Curriculum {
+public class Curriculum implements java.io.Serializable {
 
     private long id;
     private String name;

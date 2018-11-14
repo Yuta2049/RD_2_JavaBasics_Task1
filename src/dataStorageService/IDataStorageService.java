@@ -1,13 +1,18 @@
 package dataStorageService;
 
+import data.Curriculum;
 import data.Student;
 
 import java.util.List;
 
 public interface IDataStorageService {
 
-    void saveToStorage(List<Student> students);
+    /*void saveToStorageCurriculums(List<Curriculum> curriculums);
 
-    List<Student> readeFromStorage();
+    List<Curriculum> readFromStorageCurriculums();*/
+
+    void saveToStorageStudents(List<Student> students);
+
+    List<Student> readFromStorageStudents();
 
 }

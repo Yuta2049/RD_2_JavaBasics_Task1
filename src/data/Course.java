@@ -1,6 +1,6 @@
 package data;
 
-public class Course {
+public class Course implements java.io.Serializable {
 
     private long id;
     private int duration;
