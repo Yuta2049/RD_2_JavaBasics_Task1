@@ -72,9 +72,6 @@ public class Student implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return "Student{" +
-                "firstName='" + firstName + '\'' +
-                ", secondName='" + secondName + '\'' +
-                '}';
+        return getFirstName()+" "+getSecondName();
     }
 }

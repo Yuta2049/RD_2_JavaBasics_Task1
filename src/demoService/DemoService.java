@@ -43,7 +43,7 @@ public class DemoService implements IDemoService {
         IAcademicPerformanceService academicPerformanceService = new AcademicPerformanceService();
 
         for (Student currentStudent : students) {
-            System.out.println("Студент: " + currentStudent.getFirstName() + " " + currentStudent.getSecondName());
+            System.out.println("Студент: " + currentStudent);
             Curriculum curriculum = currentStudent.getCurriculum();
             System.out.println("Программа: " + curriculum.getName() + ". Продолжительность обучения: " + curriculum.getCurriculumDuration() + " часов / " + (int) Math.ceil(curriculum.getCurriculumDuration() / (double) 8) + " дней");
             System.out.println("Дата начала обучения: " + currentStudent.getStart_date() + ", осталось учиться: " + academicPerformanceService.getDaysToEndOfCurriculum(currentStudent) + " дней");
@@ -56,7 +56,7 @@ public class DemoService implements IDemoService {
 
         System.out.println();
         System.out.println("Отсортируем список по среднему баллу");
-        academicPerformanceService.getListOfStudentsSortedByAverageMark(students);
+        students = academicPerformanceService.getListOfStudentsSortedByAverageMark(students);
 
         for (Student currentStudent : students) {
             System.out.println("Студент: " + currentStudent.getFirstName() + " " + currentStudent.getSecondName() +
@@ -65,14 +65,16 @@ public class DemoService implements IDemoService {
 
         System.out.println();
         System.out.println("Отсортируем список по времени до окончания обучения");
-        academicPerformanceService.getListOfStudentsSortedByDaysToEndOfCurriculum(students);
+        students = academicPerformanceService.getListOfStudentsSortedByDaysToEndOfCurriculum(students);
+
+        for (Student currentStudent : students) {
+            System.out.println("Студент: " + currentStudent +
+                    " дней до окончания обучения: " + academicPerformanceService.getTimeOfEducationInDays(currentStudent));
+        }
 
         System.out.println();
         System.out.println("Список студентов по условию \"Есть вероятность, что не будет отчислен\":");
 
-        //for (Student currentStudent : students) {
-          //  System.out.println("Студент: " + currentStudent.getFirstName() + " " + currentStudent.getSecondName() +
-           //         " время до окончания обучения: " + academicPerformanceService.getDaysToEndOfCurriculum(currentStudent));
         students.stream().filter(academicPerformanceService::StudentPossibleWontBeExpelled).forEach(System.out::println);
 
     }
@@ -107,7 +109,7 @@ public class DemoService implements IDemoService {
                 LocalDate.of(2018, Month.NOVEMBER, 1)));
 
         students.add(new Student(2, "Petrov", "Petr", curriculumJava,
-                LocalDate.of(2018, Month.NOVEMBER, 1)));
+                LocalDate.of(2018, Month.NOVEMBER, 12)));
 
         students.add(new Student(3, "Negodyaev", "Sebastian", curriculumJava,
                 LocalDate.of(2018, Month.NOVEMBER, 10)));

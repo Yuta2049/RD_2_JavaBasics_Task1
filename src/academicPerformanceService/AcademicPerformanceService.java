@@ -6,22 +6,20 @@ import data.Student;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
-import java.util.DoubleSummaryStatistics;
 import java.util.List;
-import java.util.OptionalDouble;
 
 public class AcademicPerformanceService implements IAcademicPerformanceService {
 
     @Override
     public long getTimeOfEducationInDays(Student student) {
 
-        double duration = 0;
+        int duration = 0;
         Curriculum curriculum = student.getCurriculum();
         if (curriculum != null) {
-            duration = curriculum.getCurriculumDuration() / (double) 8;
+            duration = (int) Math.ceil(curriculum.getCurriculumDuration() / (double) 8);
         }
 
-        long timeOfEducation = ChronoUnit.DAYS.between(student.getStart_date(), LocalDate.now());
+        long timeOfEducation = ChronoUnit.DAYS.between(student.getStart_date(), LocalDate.now())+1;
 
         return (long) Math.ceil(Double.min(duration, timeOfEducation));
 
@@ -33,19 +31,19 @@ public class AcademicPerformanceService implements IAcademicPerformanceService {
         int duration = 0;
         Curriculum curriculum = student.getCurriculum();
         if (curriculum != null) {
-            duration = curriculum.getCurriculumDuration() / 8;
+            duration = (int) Math.ceil(curriculum.getCurriculumDuration() / (double) 8);
         }
 
         //System.out.println("Продолжительность: "+duration);
 
-        long timeOfEducation = ChronoUnit.DAYS.between(student.getStart_date(), LocalDate.now());
+        long timeOfEducation = ChronoUnit.DAYS.between(student.getStart_date(), LocalDate.now())+1;
 
-        //System.out.println("Сейчас: "+LocalDate.now());
-        //System.out.println("Старт. дата: "+student.getStart_date());
         //System.out.println("timeOfEducation: "+timeOfEducation);
 
         // Дней до окончания программы
-        return duration - timeOfEducation;
+        //return Math.max(duration - timeOfEducation, 0);
+
+        return Math.max(duration - timeOfEducation, 0);
     }
 
     @Override
@@ -66,7 +64,7 @@ public class AcademicPerformanceService implements IAcademicPerformanceService {
 
     @Override
     public List getListOfStudentsSortedByDaysToEndOfCurriculum(List<Student> students) {
-        students.sort(Comparator.comparing(this::getDaysToEndOfCurriculum));
+        students.sort(Comparator.comparing(this::getDaysToEndOfCurriculum).reversed());
         return students;
     }
 
@@ -77,6 +75,8 @@ public class AcademicPerformanceService implements IAcademicPerformanceService {
 
         long sumOfMarks = student.getMarks().stream().mapToInt(Integer::intValue).sum() + getDaysToEndOfCurriculum(student)*5;
 
-        return sumOfMarks/quantityOfTheDays > 3;
+        //System.out.println("Гипотетический средний балл: "+(double) sumOfMarks/quantityOfTheDays);
+
+        return (double) sumOfMarks/quantityOfTheDays > 4.5;
     }
 }
