@@ -19,7 +19,7 @@ public class AcademicPerformanceService implements IAcademicPerformanceService {
             duration = (int) Math.ceil(curriculum.getCurriculumDuration() / (double) 8);
         }
 
-        long timeOfEducation = ChronoUnit.DAYS.between(student.getStart_date(), LocalDate.now())+1;
+        long timeOfEducation = ChronoUnit.DAYS.between(student.getStart_date(), LocalDate.now()) + 1;
 
         return (long) Math.ceil(Double.min(duration, timeOfEducation));
 
@@ -36,7 +36,7 @@ public class AcademicPerformanceService implements IAcademicPerformanceService {
 
         //System.out.println("Продолжительность: "+duration);
 
-        long timeOfEducation = ChronoUnit.DAYS.between(student.getStart_date(), LocalDate.now())+1;
+        long timeOfEducation = ChronoUnit.DAYS.between(student.getStart_date(), LocalDate.now()) + 1;
 
         //System.out.println("timeOfEducation: "+timeOfEducation);
 
@@ -48,7 +48,7 @@ public class AcademicPerformanceService implements IAcademicPerformanceService {
 
     @Override
     public double getAverageMark(Student student) {
-        return (double) Math.round(student.getMarks().stream().mapToInt(Integer::intValue).sum()/(double) student.getMarks().size() * 100d) / 100;
+        return (double) Math.round(student.getMarks().stream().mapToInt(Integer::intValue).sum() / (double) student.getMarks().size() * 100d) / 100;
     }
 
     @Override
@@ -73,10 +73,10 @@ public class AcademicPerformanceService implements IAcademicPerformanceService {
 
         long quantityOfTheDays = getDaysToEndOfCurriculum(student) + student.getMarks().size();
 
-        long sumOfMarks = student.getMarks().stream().mapToInt(Integer::intValue).sum() + getDaysToEndOfCurriculum(student)*5;
+        long sumOfMarks = student.getMarks().stream().mapToInt(Integer::intValue).sum() + getDaysToEndOfCurriculum(student) * 5;
 
         //System.out.println("Гипотетический средний балл: "+(double) sumOfMarks/quantityOfTheDays);
 
-        return (double) sumOfMarks/quantityOfTheDays > 4.5;
+        return (double) sumOfMarks / quantityOfTheDays > 4.5;
     }
 }

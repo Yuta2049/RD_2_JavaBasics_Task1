@@ -70,6 +70,6 @@ public class Student implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return getFirstName()+" "+getSecondName();
+        return getFirstName() + " " + getSecondName();
     }
 }
