@@ -1,7 +1,5 @@
 package data;
 
-import data.Curriculum;
-
 import java.time.LocalDate;
 import java.util.List;
 

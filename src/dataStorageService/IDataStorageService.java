@@ -10,4 +10,6 @@ public interface IDataStorageService {
 
     List<Student> readFromStorageStudents();
 
+    String getFilename();
+
 }

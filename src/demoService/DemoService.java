@@ -27,15 +27,15 @@ public class DemoService implements IDemoService {
         List<Student> students;
 
         // Проверяем, есть ли файл с сохранненными тестовыми данными
-        if (!new File("TestData.txt").isFile()) {
+        IDataStorageService dataStorageService = new DataStorageServiceFile();
+        //if (!new File("TestData.txt").isFile()) {
+        if (!new File(dataStorageService.getFilename()).isFile()) {
 
             students = generateTestData();
-            IDataStorageService dataStorageService = new DataStorageServiceFile();
             dataStorageService.saveToStorageStudents(students);
 
         } else {
 
-            IDataStorageService dataStorageService = new DataStorageServiceFile();
             students = dataStorageService.readFromStorageStudents();
 
         }

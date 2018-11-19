@@ -8,10 +8,12 @@ import java.util.List;
 
 public class DataStorageServiceFile implements IDataStorageService {
 
+    private static final String filename = "TestData.txt";
+
     @Override
     public void saveToStorageStudents(List<Student> students) {
 
-        try (FileOutputStream fos = new FileOutputStream(new File("TestData.txt"));
+        try (FileOutputStream fos = new FileOutputStream(new File(filename));
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(students);
         } catch (IOException e) {
@@ -24,7 +26,7 @@ public class DataStorageServiceFile implements IDataStorageService {
 
         List<Student> students = new ArrayList<>();
 
-        try (FileInputStream fis = new FileInputStream(new File("TestData.txt"));
+        try (FileInputStream fis = new FileInputStream(new File(filename));
              ObjectInputStream ois = new ObjectInputStream(fis)) {
             try {
                 students = ((ArrayList<Student>) ois.readObject());
@@ -36,5 +38,10 @@ public class DataStorageServiceFile implements IDataStorageService {
             e.printStackTrace();
         }
         return students;
+    }
+
+    @Override
+    public String getFilename() {
+        return filename;
     }
 }
